@@ -9,7 +9,7 @@ import gpiod
 
 # ── Config ──────────────────────────────────────────────
 PWM_CHIP   = 0      
-PWM_PIN    = 30     #pin30是空的，用作占位符，因为DSM7锁定了pin25，因此只能通过pin24来读取风扇转速，不能控制风扇转速
+PWM_PIN    = 30     #pin30是空的，用作占位符，因为DSM7内核原因锁定了pin25，因此只能通过pin24来读取风扇转速，不能控制风扇转速
 TACH_CHIP  = 0
 TACH_PIN   = 24     #gpio0 pin24对应主板上的RX接口，风扇检测线连这里
 PWM_FREQ   = 100
@@ -66,13 +66,13 @@ def get_hdd_temp():
     return _hdd_cache["val"]
 
 def request_hdd_refresh():
-    if not os.path.exists('/dev/sata1'):
+    if not os.path.exists('/dev/sata1'):    #因DSM第一块硬盘叫sata1，故将原本的/dev/sda修改成/dev/sata1以便通过smart来读取硬盘温度
         _hdd_cache["val"] = None
         return None
     try:
         import subprocess
         r = subprocess.run(
-            ['/usr/bin/smartctl', '-A', '/dev/sata1'],
+            ['/usr/bin/smartctl', '-A', '/dev/sata1'],      #同69行的注释一样
             capture_output=True, text=True, timeout=10
         )
         for line in r.stdout.split('\n'):
