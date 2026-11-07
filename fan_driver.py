@@ -9,7 +9,7 @@ import gpiod
 
 # ── Config ──────────────────────────────────────────────
 PWM_CHIP   = 0      
-PWM_PIN    = 30     #pin30是空的，用作占位符，因为DSM7内核原因锁定了pin25，因此只能通过pin24来读取风扇转速，不能控制风扇转速
+PWM_PIN    = 30     #gpio0pin30是空的，用作占位符，因为DSM7内核原因锁定了pin25，因此只能通过pin24来读取风扇转速，不能控制风扇转速
 TACH_CHIP  = 0
 TACH_PIN   = 24     #gpio0 pin24对应主板上的RX接口，风扇检测线连这里
 PWM_FREQ   = 100
