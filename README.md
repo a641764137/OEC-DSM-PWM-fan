@@ -9,25 +9,32 @@
 |--------|------|------|
 | GND | 黑 | 外部 12V 电源 GND |
 | 12V | 黄/红 | 外部 12V 电源正极 |
-| TACH | 绿/黄 | TX (转速读取) |
-| PWM | 蓝 | RX (控制信号) |
+| TACH | 绿/黄 | RX (转速读取) |
 
 ## 部署步骤
 
 ```bash
 # 1. 安装依赖
-sudo apt-get update
-sudo apt-get install -y python3-libgpiod
+①在套件中心安装python3.9
+②SSH连接到DSM的shell，然后执行以下命令：
+  sudo -i（然后输入登录用户的密码）
+  cd /tmp
+  curl -sS https://bootstrap.pypa.io/pip/3.9/get-pip.py -o get-pip.py
+  python3.9 get-pip.py
+  python3.9 -m pip install gpiod
 
 # 2. 复制文件
-sudo mkdir -p /opt/pwm-fan
-sudo cp fan_driver.py web_server.py /opt/pwm-fan/
-sudo chmod +x /opt/pwm-fan/*.py
+mkdir -p /opt/pwm-fan
+cp fan_driver.py web_server.py /opt/pwm-fan/
+chmod +x /opt/pwm-fan/*.py
 
 # 3. 安装服务
-sudo cp pwm-fan.service pwm-fan-web.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now pwm-fan pwm-fan-web
+cp pwm-fan.service pwm-fan-web.service /usr/lib/systemd/system/
+systemctl daemon-reload
+systemctl enable pwm-fan.service
+systemctl start pwm-fan.service
+systemctl enable pwm-fan-web.service
+systemctl start pwm-fan-web.service
 
 # 4. 验证
 cat /tmp/pwm-fan-status.json
@@ -38,6 +45,7 @@ curl http://127.0.0.1:8081
 
 `http://<机器IP>:8081`
 
+--------------------------------------------以下是原作者的内容----------------------------------------------
 - **Auto 模式**：≤35°C 风扇停转，35~65°C 线性调速，≥65°C 全速
 - **Manual 模式**：滑块 0%~100%，支持 OFF/25/50/75/100% 快捷按钮
 
