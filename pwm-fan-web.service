@@ -5,7 +5,7 @@ Wants=pwm-fan.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /opt/pwm-fan/web_server.py
+ExecStart=/usr/local/bin/python3.9 /opt/pwm-fan/web_server.py
 Restart=always
 RestartSec=5
 
