@@ -4,7 +4,7 @@ After=sysinit.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /opt/pwm-fan/fan_driver.py
+ExecStart=/usr/local/bin/python3.9 /opt/pwm-fan/fan_driver.py
 Restart=always
 RestartSec=10
 StartLimitBurst=10
