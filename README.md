@@ -1,6 +1,6 @@
 # PWM Fan Driver + Web Monitor
 
-> 专为 **OEC-Turbo (RK3566)** 适配的 GPIO PWM 风扇驱动，通过web来读取监控CPU、硬盘的温度，并读取风扇转速。
+> 原作者https://github.com/arounyf/PWM-fan的项目，专为 **OEC-Turbo (RK3566)** 适配的 GPIO PWM 风扇驱动，本fork项目对DSM7进行了部分适配，可通过web来读取监控CPU、硬盘的温度，并读取风扇转速（内核gpio原因无法进行调速）。
 
 
 ## 硬件接线
